@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "repo": "SylphxAI/jit-runner",
+    "name": "JIT Runner",
+    "lifecycle": "active",
+    "layer": "foundation",
+    "summary": "Reusable GitHub Actions runner image with Sylphx-required base tools and GHCR publishing workflow.",
+    "goals": [
+      "Provide a reproducible GitHub Actions runner image with Sylphx-required base tools.",
+      "Publish traceable GHCR image tags from main.",
+      "Keep the image contract small enough that repository-specific CI behavior stays in the consuming repositories or central reusable workflows."
+    ],
+    "nonGoals": [
+      "Own GitHub Actions runner registration, autoscaling, queueing, credentials, or repository-specific CI policy.",
+      "Own application build behavior for consumers of the runner image.",
+      "Own enterprise doctrine, manifest schema, rollout planning, or org rulesets."
+    ]
+  },
+  "boundaries": {
+    "owns": [
+      {
+        "name": "runner-image",
+        "description": "Dockerfile, selected base runner image, installed Sylphx tools, and environment defaults for the reusable runner image."
+      },
+      {
+        "name": "runner-image-publication",
+        "description": "GHCR image naming, push workflow, and published tags for the jit-runner image."
+      }
+    ],
+    "doesNotOwn": [
+      "GitHub Actions runner registration, autoscaling, queue assignment, secrets, credentials, or fleet lifecycle management.",
+      "Repository-specific CI jobs, application build behavior, deploy policy, or status context requirements.",
+      "Enterprise doctrine, project manifest schema, org rulesets, rollout issue reconciliation, or shared delivery policy."
+    ],
+    "publicSurfaces": [
+      {
+        "type": "manifest",
+        "name": "Runner image Dockerfile",
+        "location": "Dockerfile"
+      },
+      {
+        "type": "workflow",
+        "name": "Build and publish workflow",
+        "location": ".github/workflows/build.yml"
+      },
+      {
+        "type": "manifest",
+        "name": "Published GHCR image",
+        "location": "ghcr.io/sylphxai/jit-runner"
+      },
+      {
+        "type": "manifest",
+        "name": "Project control-plane manifest",
+        "location": ".doctrine/project.json"
+      }
+    ],
+    "allowedDependencies": [
+      {
+        "repo": "SylphxAI/doctrine",
+        "surface": "project manifest schema, standards, and rollout audit",
+        "direction": "downward"
+      }
+    ],
+    "forbiddenCouplings": [
+      "Do not put repository-specific build or deploy behavior into the shared runner image.",
+      "Do not require consumers to depend on undocumented Dockerfile internals instead of published image tags or digests.",
+      "Do not treat source revert as sufficient recovery after image publication; consumers must be able to roll back to a previous digest.",
+      "Do not publish enterprise process policy from this repository instead of SylphxAI/doctrine."
+    ]
+  },
+  "documentation": {
+    "adr": {
+      "path": "docs/adr/",
+      "status": "planned"
+    },
+    "specs": {
+      "path": "README.md",
+      "status": "planned"
+    },
+    "catalog": {
+      "path": ".doctrine/project.json",
+      "status": "present"
+    },
+    "runbooks": {
+      "path": "docs/runbooks/",
+      "status": "planned"
+    },
+    "generatedReferences": {
+      "path": "docs/reference/",
+      "status": "planned"
+    }
+  },
+  "delivery": {
+    "ciModel": "legacy-ci",
+    "requiredContexts": [],
+    "deployPath": "On main, .github/workflows/build.yml builds and pushes ghcr.io/sylphxai/jit-runner tags latest and sha-<short-sha>.",
+    "productionProof": "Durable GHCR digest readback and a runner smoke check are not yet declared.",
+    "recoveryClass": "runtime-rollback-only"
+  },
+  "adoption": {
+    "status": "baseline",
+    "gaps": [
+      {
+        "id": "readme-missing",
+        "description": "Add a README that documents the image contract, included tools, supported tags, and consumer expectations.",
+        "owner": "SylphxAI/jit-runner",
+        "target": "Before full adoption"
+      },
+      {
+        "id": "pr-ci-missing",
+        "description": "Add pull-request validation for Dockerfile lint, image build, dependency provenance, and runner smoke checks.",
+        "owner": "SylphxAI/jit-runner",
+        "target": "Before full adoption"
+      },
+      {
+        "id": "release-proof-missing",
+        "description": "Document GHCR digest readback, consumer smoke proof, and rollback-by-digest expectations for published images.",
+        "owner": "SylphxAI/jit-runner",
+        "target": "Before production runner fleet dependency"
+      }
+    ]
+  }
+}
