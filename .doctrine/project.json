@@ -5,6 +5,7 @@
     "name": "JIT Runner",
     "lifecycle": "active",
     "layer": "foundation",
+    "policyPool": "infrastructure",
     "summary": "Reusable GitHub Actions runner image with Sylphx-required base tools and GHCR publishing workflow.",
     "goals": [
       "Provide a reproducible GitHub Actions runner image with Sylphx-required base tools.",
@@ -93,6 +94,7 @@
   },
   "delivery": {
     "ciModel": "legacy-ci",
+    "deployable": false,
     "requiredContexts": [],
     "deployPath": "On main, .github/workflows/build.yml builds and pushes ghcr.io/sylphxai/jit-runner tags latest and sha-<short-sha>.",
     "productionProof": "Durable GHCR digest readback and a runner smoke check are not yet declared.",
