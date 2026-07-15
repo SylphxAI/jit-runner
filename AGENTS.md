@@ -1,15 +1,22 @@
-# Repository Instructions
+# jit-runner — local agent notes only
 
-Engineering doctrine: https://github.com/SylphxAI/doctrine. Read doctrine
-`AGENTS.md`, `PRINCIPLES.md`, and `ADR.md`; load doctrine `standards/*.md` when
-the task triggers them.
+Doctrine and fleet delivery law live in the **host always-on constitution**
+(`~/.grok/AGENTS.md` / Doctrine template). This file must **not** restate,
+weaken, or fork that law (including PR-vs-direct-trunk delivery).
 
-Read [PROJECT.md](./PROJECT.md) and
-[.doctrine/project.json](./.doctrine/project.json) before changing behavior,
-CI, delivery, documentation, public surfaces, persistence, security posture, or
-cross-repository integrations.
+Local truth: `PROJECT.md`, `.doctrine/project.json` when present.
 
-This repository owns only the reusable Sylphx GitHub Actions runner image and
-its GHCR publish workflow. Keep repository-specific build, deploy, and policy
-logic in consumer repositories or central reusable workflows. Consumers should
-depend on published image tags or digests, not Dockerfile internals.
+## Boundary hazards
+
+- Never commit secrets, tokens, `.env` files, or credentials.
+
+## Local commands
+
+- See `PROJECT.md` / `README.md` for repo validation commands.
+- Prefer the **narrowest** affected check before full workspace runs.
+- Report layers honestly: local diff · trunk FF · deploy · prod proof (do not collapse).
+
+## Validation notes
+
+- Prefer the **narrowest** affected check before full workspace runs.
+- Report layers honestly: local diff · trunk FF · deploy · prod proof (do not collapse).
