@@ -14,7 +14,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     permissions:
       contents: read
       packages: write
