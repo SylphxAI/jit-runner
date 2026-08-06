@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     jq \
+    kmod \
     && rm -rf /var/lib/apt/lists/*
 
 # Bun
