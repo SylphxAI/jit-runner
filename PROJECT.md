@@ -8,7 +8,6 @@ and GHCR image publishing workflow used to supply a reusable runner image.
 
 - State: `active`
 - Layer: `foundation`
-- Machine manifest: [`.doctrine/project.json`](./.doctrine/project.json)
 
 ## Goals
 
@@ -39,7 +38,7 @@ undocumented implementation details of the Dockerfile or base image.
 - Build and publish workflow: `.github/workflows/build.yml`
 - Published image name: `ghcr.io/sylphxai/jit-runner`
 - Human project orientation: `PROJECT.md`
-- Machine-readable project manifest: `.doctrine/project.json`
+- Machine-readable project manifest: 
 
 ## Delivery
 
@@ -52,4 +51,4 @@ undocumented implementation details of the Dockerfile or base image.
 - Recovery class: `runtime-rollback-only`
 
 Adoption is baseline only. The current gaps are tracked in
-`.doctrine/project.json`.
+.
